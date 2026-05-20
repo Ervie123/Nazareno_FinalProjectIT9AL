@@ -10,8 +10,8 @@
 
 
   
- <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}">
 
+@vite(['resources/css/app.css', 'resources/js/app.js'])
   <style>
     .page-btn {
         min-width: 42px;
