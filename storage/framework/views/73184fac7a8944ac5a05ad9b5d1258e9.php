@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Tournament Pro — @yield('title', 'Sign In')</title>
+  <title>Tournament Pro — <?php echo $__env->yieldContent('title', 'Sign In'); ?></title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
 
  
- <link rel="stylesheet" href="{{ url('css/app.css') }}">
+ <link rel="stylesheet" href="<?php echo e(url('css/app.css')); ?>">
 
 </head>
 
@@ -27,19 +27,19 @@
       </div>
 
       <div class="auth-left-content">
-        @yield('auth-left')
+        <?php echo $__env->yieldContent('auth-left'); ?>
       </div>
     </div>
 
     <div class="auth-right">
       <div class="auth-form-wrap">
-        @yield('auth-form')
+        <?php echo $__env->yieldContent('auth-form'); ?>
       </div>
     </div>
 
   </div>
 
-  @stack('scripts')
+  <?php echo $__env->yieldPushContent('scripts'); ?>
 
 </body>
-</html>
+</html><?php /**PATH C:\Users\Default.DESKTOP-RDM1A2L\Downloads\IT9AL\laravel-tournament\resources\views\layouts\auth.blade.php ENDPATH**/ ?>
