@@ -12,10 +12,15 @@ COPY . .
 
 RUN composer install --no-dev --optimize-autoloader
 
-# IMPORTANT: ensure public permissions
+# FIX PERMISSIONS (IMPORTANT FOR LARAVEL)
 RUN chmod -R 775 storage bootstrap/cache
+
+# CLEAR CACHE INSIDE BUILD
+RUN php artisan config:clear
+RUN php artisan cache:clear
+RUN php artisan view:clear
 
 EXPOSE 10000
 
-# 🔥 PRODUCTION SAFE SERVER
-CMD php -S 0.0.0.0:10000 -t public
+# 🔥 FORCE PUBLIC DIRECTORY SERVING
+CMD ["php", "-S", "0.0.0.0:10000", "-t", "public"]
