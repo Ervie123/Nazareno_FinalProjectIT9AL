@@ -9,8 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
 
   {{-- ✅ FIXED: safer asset loading for production --}}
-  <link rel="stylesheet" href="{{ url('css/app.css') }}">
-
+ <link rel="stylesheet" href="{{ url('css/app.css') }}">
   <style>
     .page-btn {
         min-width: 42px;
