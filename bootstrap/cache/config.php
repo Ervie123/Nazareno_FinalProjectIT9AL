@@ -1,15 +1,15 @@
 <?php return array (
   'app' => 
   array (
-    'name' => 'Tournament Pro',
+    'name' => 'Laravel',
     'env' => 'production',
     'debug' => false,
-    'url' => 'https://your-app.onrender.com',
+    'url' => 'https://nazareno-finalprojectit9al.onrender.com',
     'timezone' => 'Asia/Manila',
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:aqs6s0DkGKnhPbU07amD/ao0clpa5Y4nf2OzpGLSqcI=',
+    'key' => 'base64:Fphvof1rwvfG8gVW735x+30Vq9fKDZbs5pOEv10bxeg=',
     'cipher' => 'AES-256-CBC',
     'maintenance' => 
     array (
@@ -104,7 +104,7 @@
         'serialize' => false,
       ),
     ),
-    'prefix' => 'tournament_pro_cache_',
+    'prefix' => 'laravel_cache_',
   ),
   'database' => 
   array (
@@ -115,7 +115,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'tournament_pro',
+        'database' => 'YOUR_DB_NAME',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -123,11 +123,11 @@
       array (
         'driver' => 'mysql',
         'url' => NULL,
-        'host' => '127.0.0.1',
+        'host' => 'YOUR_DB_HOST',
         'port' => '3306',
-        'database' => 'tournament_pro',
-        'username' => 'root',
-        'password' => '',
+        'database' => 'YOUR_DB_NAME',
+        'username' => 'YOUR_DB_USER',
+        'password' => 'YOUR_DB_PASSWORD',
         'unix_socket' => '',
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
@@ -140,11 +140,11 @@
       array (
         'driver' => 'pgsql',
         'url' => NULL,
-        'host' => '127.0.0.1',
+        'host' => 'YOUR_DB_HOST',
         'port' => '3306',
-        'database' => 'tournament_pro',
-        'username' => 'root',
-        'password' => '',
+        'database' => 'YOUR_DB_NAME',
+        'username' => 'YOUR_DB_USER',
+        'password' => 'YOUR_DB_PASSWORD',
         'charset' => 'utf8',
         'prefix' => '',
         'schema' => 'public',
@@ -178,7 +178,7 @@
       0 => 2,
       1 => 100,
     ),
-    'cookie' => 'tournament_pro_session',
+    'cookie' => 'laravel_session',
     'path' => '/',
     'domain' => NULL,
     'secure' => NULL,
