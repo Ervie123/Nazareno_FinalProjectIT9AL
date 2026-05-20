@@ -1,23 +1,30 @@
-FROM php:8.2-cli
+FROM php:8.2-apache
 
+# Install dependencies
 RUN apt-get update && apt-get install -y \
-    unzip git curl libzip-dev \
-    && docker-php-ext-install pdo pdo_mysql zip
+    libzip-dev zip unzip git curl \
+    && docker-php-ext-install pdo pdo_mysql
 
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Enable Apache rewrite
+RUN a2enmod rewrite
 
+# Set working directory
 WORKDIR /var/www/html
 
+# Copy project files
 COPY . .
 
+# Install composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-RUN chmod -R 775 storage bootstrap/cache
-RUN chown -R www-data:www-data storage bootstrap/cache || true
+# Permissions (Linux-safe for Render)
+RUN chmod -R 775 storage bootstrap/cache || true
 
-RUN php artisan view:clear
-RUN php artisan cache:clear
-RUN php artisan config:clear
-EXPOSE 10000
+# Apache config fix
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 
-CMD ["php", "-S", "0.0.0.0:10000", "-t", "public"]
+EXPOSE 80
