@@ -7,29 +7,37 @@ RUN apt-get update && apt-get install -y \
     curl \
     libzip-dev \
     zip \
-    && docker-php-ext-install pdo pdo_mysql zip
+    nodejs \
+    npm \
+    sqlite3 \
+    libsqlite3-dev
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo pdo_sqlite zip
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
 WORKDIR /var/www/html
 
-# Copy project files
 COPY . .
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Fix storage permissions (important for Laravel)
+# Install Node dependencies + build assets (THIS FIXES YOUR CSS)
+RUN npm install
+RUN npm run build
+
+# SQLite setup (if you're using sqlite)
+RUN touch database/database.sqlite
+
+# Permissions fix
 RUN chmod -R 775 storage bootstrap/cache
 
-# ⚠️ DO NOT run migrations or key generate in build
-# RUN php artisan migrate --force ❌ REMOVE THIS
-# RUN php artisan key:generate ❌ REMOVE THIS
+# Run migrations (optional - safe if DB exists)
+RUN php artisan migrate --force || true
 
-# Expose Render port
 EXPOSE 10000
 
-# Start Laravel server
 CMD php artisan serve --host=0.0.0.0 --port=10000
