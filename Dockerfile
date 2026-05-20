@@ -15,10 +15,9 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chmod -R 775 storage bootstrap/cache
 RUN chown -R www-data:www-data storage bootstrap/cache || true
 
-php artisan optimize:clear
-php artisan config:clear
-php artisan route:clear
-php artisan view:clear
+RUN php artisan optimize:clear
+RUN php artisan config:clear
+RUN php artisan route:clear
 EXPOSE 10000
 
 CMD ["php", "-S", "0.0.0.0:10000", "-t", "public"]
