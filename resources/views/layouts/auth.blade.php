@@ -8,40 +8,38 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
 
-  {{-- ✅ FIXED --}}
- <link rel="stylesheet" href="{{ url('css/app.css') }}">
+  {{-- ✅ FIX: Vite --}}
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 
 <body>
 
-<div class="auth-wrapper">
+  <div class="auth-wrapper">
 
-  <!-- LEFT -->
-  <div class="auth-left">
-    <div class="auth-brand">
-      <div class="brand-logo-box">🏆</div>
-      <div>
-        <div class="auth-brand-name">Tournament Pro</div>
-        <div class="auth-brand-sub">Management System</div>
+    <div class="auth-left">
+      <div class="auth-brand">
+        <div class="brand-logo-box">🏆</div>
+        <div>
+          <div class="auth-brand-name">Tournament Pro</div>
+          <div class="auth-brand-sub">Management System</div>
+        </div>
+      </div>
+
+      <div class="auth-left-content">
+        @yield('auth-left')
       </div>
     </div>
 
-    <div class="auth-left-content">
-      @yield('auth-left')
+    <div class="auth-right">
+      <div class="auth-form-wrap">
+        @yield('auth-form')
+      </div>
     </div>
+
   </div>
 
-  <!-- RIGHT -->
-  <div class="auth-right">
-    <div class="auth-form-wrap">
-      @yield('auth-form')
-    </div>
-  </div>
-
-</div>
-
-<script src="{{ url('js/app.js') }}"></script>
-@stack('scripts')
+  @stack('scripts')
 
 </body>
 </html>

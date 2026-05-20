@@ -8,8 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
 
-  {{-- ✅ FIXED: safer asset loading for production --}}
- <link rel="stylesheet" href="{{ url('css/app.css') }}">
+  {{-- ✅ FIX: Use Vite instead of asset() --}}
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+
   <style>
     .page-btn {
         min-width: 42px;
@@ -25,10 +26,24 @@
         transition: all 0.2s ease;
     }
 
-    .page-btn:hover { background: #1f1f1f; }
-    .page-btn.active { background: #e5e5e5; color: #000; }
-    .page-btn.disabled { opacity: 0.4; pointer-events: none; }
-    .page-btn.dots { background: transparent; color: #aaa; }
+    .page-btn:hover {
+        background: #1f1f1f;
+    }
+
+    .page-btn.active {
+        background: #e5e5e5;
+        color: #000;
+    }
+
+    .page-btn.disabled {
+        opacity: 0.4;
+        pointer-events: none;
+    }
+
+    .page-btn.dots {
+        background: transparent;
+        color: #aaa;
+    }
   </style>
 
   @stack('styles')
@@ -36,95 +51,67 @@
 
 <body>
 
-<div class="app-wrapper">
+  <div class="app-wrapper">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-brand">
-      <div class="brand-logo-box small">🏆</div>
-      <div>
-        <div class="sb-name">Tournament Pro</div>
-        <div class="sb-sub">Management System</div>
-      </div>
-    </div>
-
-    <nav class="sidebar-nav">
-      <a class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
-      <a class="nav-item {{ request()->routeIs('tournaments*') ? 'active' : '' }}" href="{{ route('tournaments.index') }}">Tournaments</a>
-      <a class="nav-item {{ request()->routeIs('teams*') ? 'active' : '' }}" href="{{ route('teams.index') }}">Teams</a>
-      <a class="nav-item {{ request()->routeIs('matches*') ? 'active' : '' }}" href="{{ route('matches.index') }}">Matches</a>
-      <a class="nav-item {{ request()->routeIs('standings*') ? 'active' : '' }}" href="{{ route('standings.index') }}">Standings</a>
-    </nav>
-
-    <div class="sidebar-footer">
-      <div class="user-chip">
-        <div class="user-avatar">AD</div>
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-logo-box small">🏆</div>
         <div>
-          <div class="user-name">Admin User</div>
-          <div class="user-role">Administrator</div>
+          <div class="sb-name">Tournament Pro</div>
+          <div class="sb-sub">Management System</div>
         </div>
       </div>
 
-      <a href="{{ route('auth.logout') }}" class="signout-btn">Sign out</a>
-    </div>
-  </aside>
+      <nav class="sidebar-nav">
+        <a class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
+        <a class="nav-item {{ request()->routeIs('tournaments*') ? 'active' : '' }}" href="{{ route('tournaments.index') }}">Tournaments</a>
+        <a class="nav-item {{ request()->routeIs('teams*') ? 'active' : '' }}" href="{{ route('teams.index') }}">Teams</a>
+        <a class="nav-item {{ request()->routeIs('matches*') ? 'active' : '' }}" href="{{ route('matches.index') }}">Matches</a>
+        <a class="nav-item {{ request()->routeIs('standings*') ? 'active' : '' }}" href="{{ route('standings.index') }}">Standings</a>
+      </nav>
 
-  <!-- MAIN -->
-  <div class="main-area">
-    <div class="page-content">
+      <div class="sidebar-footer">
+        <div class="user-chip">
+          <div class="user-avatar">AD</div>
+          <div>
+            <div class="user-name">Admin User</div>
+            <div class="user-role">Administrator</div>
+          </div>
+        </div>
 
-      @if(session('success'))
-        <div class="toast success" id="flashToast">{{ session('success') }}</div>
-      @endif
+        <a href="{{ route('auth.logout') }}" class="signout-btn">
+          Sign out
+        </a>
+      </div>
+    </aside>
 
-      @if(session('error'))
-        <div class="toast error" id="flashToast">{{ session('error') }}</div>
-      @endif
+    <div class="main-area">
+      <div class="page-content">
 
-      @yield('content')
+        @if(session('success'))
+          <div class="toast success" id="flashToast">{{ session('success') }}</div>
+        @endif
+
+        @if(session('error'))
+          <div class="toast error" id="flashToast">{{ session('error') }}</div>
+        @endif
+
+        @yield('content')
+      </div>
     </div>
   </div>
 
-</div>
+  @stack('scripts')
 
-<!-- MODAL -->
-<div class="modal-backdrop hidden" id="modalBackdrop">
-  <div class="modal-box">
-    <button class="modal-x" id="modalX">✕</button>
-    <div id="modalBody">
-      @yield('modal')
-    </div>
-  </div>
-</div>
-
-<script src="{{ url('js/app.js') }}"></script>
-@stack('scripts')
-
-<script>
-  const toast = document.getElementById('flashToast');
-  if (toast) {
-    setTimeout(() => {
-      toast.style.opacity = '0';
-      setTimeout(() => toast.remove(), 400);
-    }, 3000);
-  }
-
-  document.getElementById('modalX')?.addEventListener('click', () => {
-    document.getElementById('modalBackdrop').classList.add('hidden');
-  });
-
-  document.getElementById('modalBackdrop')?.addEventListener('click', e => {
-    if (e.target.id === 'modalBackdrop') {
-      document.getElementById('modalBackdrop').classList.add('hidden');
+  <script>
+    const toast = document.getElementById('flashToast');
+    if (toast) {
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 400);
+      }, 3000);
     }
-  });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      document.getElementById('modalBackdrop')?.classList.add('hidden');
-    }
-  });
-</script>
+  </script>
 
 </body>
 </html>
