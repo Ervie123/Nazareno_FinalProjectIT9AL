@@ -52,4 +52,7 @@ Route::group([], function () {
     // STANDINGS
     Route::get('/standings', [StandingsController::class, 'index'])->name('standings.index');
 
+    Route::get('/', function () {
+    return view('welcome');
+});
 });
