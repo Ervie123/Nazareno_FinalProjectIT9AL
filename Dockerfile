@@ -100,7 +100,9 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction
 
 # Install frontend dependencies and build Vite assets
 
+RUN npm install
 
+RUN npm run build
 
 
 
