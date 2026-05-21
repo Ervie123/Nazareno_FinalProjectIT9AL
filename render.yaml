@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: laravel-tournament
+    env: php
+    buildCommand: |
+      composer install
+      npm install
+      npm run build
+    startCommand: bash start.sh
