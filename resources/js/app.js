@@ -1,3 +1,3 @@
 import '../css/app.css';
 
-console.log('Laravel Vite Loaded');
+console.log('Vite working');

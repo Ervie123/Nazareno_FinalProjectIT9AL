@@ -56,6 +56,10 @@ RUN mkdir -p bootstrap/cache \
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
+RUN php artisan optimize:clear
+RUN php artisan config:clear
+RUN php artisan cache:clear
+RUN php artisan view:clear
 
 # Install frontend dependencies and build Vite assets
 RUN npm install
