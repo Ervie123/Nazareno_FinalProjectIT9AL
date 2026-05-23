@@ -1,26 +1,13 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^/build/
     RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^ index.php [L]
 </IfModule>
 
-# ==============================
-# FORCE CORRECT MIME TYPES
-# ==============================
 <IfModule mod_mime.c>
     AddType text/css .css
     AddType application/javascript .js
-    AddType image/svg+xml .svg
-</IfModule>
-
-<IfModule mod_headers.c>
-    <FilesMatch "\.(css)$">
-        Header set Content-Type "text/css"
-    </FilesMatch>
-</IfModule>
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteRule ^ index.php [L]
 </IfModule>
