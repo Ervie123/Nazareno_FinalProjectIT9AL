@@ -14,7 +14,6 @@ use App\Http\Controllers\StandingsController;
 |--------------------------------------------------------------------------
 */
 
-// Login page (ROOT FIXED HERE)
 Route::get('/', [AuthController::class, 'showLogin'])->name('auth.login');
 
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login.post');
@@ -22,14 +21,34 @@ Route::post('/login', [AuthController::class, 'login'])->name('auth.login.post')
 Route::get('/register', [AuthController::class, 'showRegister'])->name('auth.register');
 Route::post('/register', [AuthController::class, 'register'])->name('auth.register.post');
 
+/*
+|--------------------------------------------------------------------------
+| FORGOT PASSWORD
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/forgot', [AuthController::class, 'showForgot'])->name('auth.forgot');
-Route::post('/forgot', [AuthController::class, 'sendReset'])->name('auth.forgot.post');
+
+Route::post('/forgot', [AuthController::class, 'sendReset'])
+    ->name('auth.forgot.post');
+
+Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword'])
+    ->name('password.reset');
+
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])
+    ->name('password.update');
+
+/*
+|--------------------------------------------------------------------------
+| LOGOUT
+|--------------------------------------------------------------------------
+*/
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 
 /*
 |--------------------------------------------------------------------------
-| APP ROUTES
+| DASHBOARD
 |--------------------------------------------------------------------------
 */
 
@@ -40,10 +59,15 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 | TOURNAMENTS
 |--------------------------------------------------------------------------
 */
+
 Route::get('/tournaments', [TournamentController::class, 'index'])->name('tournaments.index');
+
 Route::get('/tournaments/{id}', [TournamentController::class, 'show'])->name('tournaments.show');
+
 Route::post('/tournaments', [TournamentController::class, 'store'])->name('tournaments.store');
+
 Route::put('/tournaments/{id}', [TournamentController::class, 'update'])->name('tournaments.update');
+
 Route::delete('/tournaments/{id}', [TournamentController::class, 'destroy'])->name('tournaments.destroy');
 
 /*
@@ -51,9 +75,13 @@ Route::delete('/tournaments/{id}', [TournamentController::class, 'destroy'])->na
 | TEAMS
 |--------------------------------------------------------------------------
 */
+
 Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
+
 Route::post('/teams', [TeamController::class, 'store'])->name('teams.store');
+
 Route::put('/teams/{id}', [TeamController::class, 'update'])->name('teams.update');
+
 Route::delete('/teams/{id}', [TeamController::class, 'destroy'])->name('teams.destroy');
 
 /*
@@ -61,9 +89,13 @@ Route::delete('/teams/{id}', [TeamController::class, 'destroy'])->name('teams.de
 | MATCHES
 |--------------------------------------------------------------------------
 */
+
 Route::get('/matches', [MatchController::class, 'index'])->name('matches.index');
+
 Route::post('/matches', [MatchController::class, 'store'])->name('matches.store');
+
 Route::put('/matches/{id}', [MatchController::class, 'update'])->name('matches.update');
+
 Route::delete('/matches/{id}', [MatchController::class, 'destroy'])->name('matches.destroy');
 
 /*
@@ -71,4 +103,5 @@ Route::delete('/matches/{id}', [MatchController::class, 'destroy'])->name('match
 | STANDINGS
 |--------------------------------------------------------------------------
 */
+
 Route::get('/standings', [StandingsController::class, 'index'])->name('standings.index');
