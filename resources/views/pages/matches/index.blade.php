@@ -46,7 +46,7 @@
     </option>
   </select>
 
-  <!-- FIXED TOURNAMENT FILTER -->
+  <!-- TOURNAMENT FILTER -->
   <select class="filter-sel" name="tournament" onchange="this.form.submit()">
     <option value="">All Tournaments</option>
 
@@ -91,26 +91,26 @@
 
       <div class="match-card-top">
 
-        <span class="badge badge-{{ $m->status }}">
-          {{ strtoupper($m->status) }}
+        <span class="badge badge-{{ $m['status'] }}">
+          {{ strtoupper($m['status']) }}
         </span>
 
         <div class="match-meta">
-          <span>{{ $m->date }}</span>
-          <span>{{ $m->time }}</span>
+          <span>{{ $m['date'] }}</span>
+          <span>{{ $m['time'] }}</span>
         </div>
 
         <div class="match-card-btns">
 
           <button
             class="btn-tbl-edit"
-            onclick="document.getElementById('editMatchModal{{ $m->id }}').classList.remove('hidden')">
+            onclick="document.getElementById('editMatchModal{{ $m['id'] }}').classList.remove('hidden')">
             ✎
           </button>
 
           <form
             method="POST"
-            action="{{ route('matches.destroy', $m->id) }}"
+            action="{{ route('matches.destroy', $m['id']) }}"
             onsubmit="return confirm('Delete this match?')">
 
             @csrf
@@ -127,25 +127,25 @@
       <div class="score-row">
 
         <div class="match-team-name">
-          {{ $m->team_a }}
+          {{ $m['teamA'] }}
         </div>
 
         <div class="score-center">
-          <span class="score-num">{{ $m->score_a }}</span>
+          <span class="score-num">{{ $m['scoreA'] }}</span>
           <span class="score-vs">vs</span>
-          <span class="score-num">{{ $m->score_b }}</span>
+          <span class="score-num">{{ $m['scoreB'] }}</span>
         </div>
 
         <div class="match-team-name" style="text-align:right">
-          {{ $m->team_b }}
+          {{ $m['teamB'] }}
         </div>
 
       </div>
 
       <div class="match-venue-row">
-        {{ $m->venue }}
+        {{ $m['venue'] }}
         ·
-        {{ $m->tournament->name ?? '-' }}
+        {{ $m['tournament'] ?? '-' }}
       </div>
 
     </div>
@@ -208,13 +208,13 @@
 <!-- EDIT MODALS -->
 @foreach($matches as $m)
 
-<div class="modal-backdrop hidden" id="editMatchModal{{ $m->id }}">
+<div class="modal-backdrop hidden" id="editMatchModal{{ $m['id'] }}">
 
   <div class="modal-box">
 
     <button
       class="modal-x"
-      onclick="document.getElementById('editMatchModal{{ $m->id }}').classList.add('hidden')">
+      onclick="document.getElementById('editMatchModal{{ $m['id'] }}').classList.add('hidden')">
       ✕
     </button>
 
@@ -222,7 +222,7 @@
       Edit Match
     </div>
 
-    <form method="POST" action="{{ route('matches.update', $m->id) }}">
+    <form method="POST" action="{{ route('matches.update', $m['id']) }}">
 
       @csrf
       @method('PUT')
@@ -237,7 +237,7 @@
         <button
           type="button"
           class="btn-cancel"
-          onclick="document.getElementById('editMatchModal{{ $m->id }}').classList.add('hidden')">
+          onclick="document.getElementById('editMatchModal{{ $m['id'] }}').classList.add('hidden')">
           Cancel
         </button>
 

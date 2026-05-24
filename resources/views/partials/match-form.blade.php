@@ -34,15 +34,15 @@
 
 <div class="form-group">
   <label>Tournament</label>
+
   <select name="tournament" required>
     <option value="">Select Tournament</option>
+
     @foreach($tournaments as $t)
-      @php
-        $value = is_object($t) ? $t->name : $t;
-      @endphp
-      <option value="{{ $value }}"
-        {{ old('tournament', $m['tournament'] ?? '') == $value ? 'selected' : '' }}>
-        {{ $value }}
+      <option
+        value="{{ $t->id }}"
+        {{ old('tournament', $m['tournament_id'] ?? '') == $t->id ? 'selected' : '' }}>
+        {{ $t->name }}
       </option>
     @endforeach
   </select>
@@ -71,7 +71,9 @@
 
 <div class="form-group">
   <label>Status</label>
+
   <select name="status">
+
     <option value="scheduled"
       {{ old('status', $m['status'] ?? '') == 'scheduled' ? 'selected' : '' }}>
       Scheduled
@@ -86,5 +88,6 @@
       {{ old('status', $m['status'] ?? '') == 'completed' ? 'selected' : '' }}>
       Completed
     </option>
+
   </select>
 </div>
