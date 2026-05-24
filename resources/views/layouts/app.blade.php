@@ -8,9 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
 
-@viteReactRefresh
-@vite(['resources/css/app.css', 'resources/js/app.js'])
-
+  {{-- Vite Assets --}}
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
 
   <style>
     .page-btn {
@@ -64,14 +63,34 @@
       </div>
 
       <nav class="sidebar-nav">
-        <a class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
-        <a class="nav-item {{ request()->routeIs('tournaments*') ? 'active' : '' }}" href="{{ route('tournaments.index') }}">Tournaments</a>
-        <a class="nav-item {{ request()->routeIs('teams*') ? 'active' : '' }}" href="{{ route('teams.index') }}">Teams</a>
-        <a class="nav-item {{ request()->routeIs('matches*') ? 'active' : '' }}" href="{{ route('matches.index') }}">Matches</a>
-        <a class="nav-item {{ request()->routeIs('standings*') ? 'active' : '' }}" href="{{ route('standings.index') }}">Standings</a>
+        <a class="nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}"
+           href="{{ route('dashboard') }}">
+          Dashboard
+        </a>
+
+        <a class="nav-item {{ request()->routeIs('tournaments*') ? 'active' : '' }}"
+           href="{{ route('tournaments.index') }}">
+          Tournaments
+        </a>
+
+        <a class="nav-item {{ request()->routeIs('teams*') ? 'active' : '' }}"
+           href="{{ route('teams.index') }}">
+          Teams
+        </a>
+
+        <a class="nav-item {{ request()->routeIs('matches*') ? 'active' : '' }}"
+           href="{{ route('matches.index') }}">
+          Matches
+        </a>
+
+        <a class="nav-item {{ request()->routeIs('standings*') ? 'active' : '' }}"
+           href="{{ route('standings.index') }}">
+          Standings
+        </a>
       </nav>
 
       <div class="sidebar-footer">
+
         <div class="user-chip">
           <div class="user-avatar">AD</div>
           <div>
@@ -80,9 +99,15 @@
           </div>
         </div>
 
-        <a href="{{ route('auth.logout') }}" class="signout-btn">
-          Sign out
-        </a>
+        {{-- FIXED LOGOUT --}}
+        <form method="POST" action="{{ route('auth.logout') }}">
+          @csrf
+
+          <button type="submit" class="signout-btn">
+            Sign out
+          </button>
+        </form>
+
       </div>
     </aside>
 
@@ -90,26 +115,37 @@
       <div class="page-content">
 
         @if(session('success'))
-          <div class="toast success" id="flashToast">{{ session('success') }}</div>
+          <div class="toast success" id="flashToast">
+            {{ session('success') }}
+          </div>
         @endif
 
         @if(session('error'))
-          <div class="toast error" id="flashToast">{{ session('error') }}</div>
+          <div class="toast error" id="flashToast">
+            {{ session('error') }}
+          </div>
         @endif
 
         @yield('content')
+
       </div>
     </div>
+
   </div>
 
   @stack('scripts')
 
   <script>
     const toast = document.getElementById('flashToast');
+
     if (toast) {
       setTimeout(() => {
         toast.style.opacity = '0';
-        setTimeout(() => toast.remove(), 400);
+
+        setTimeout(() => {
+          toast.remove();
+        }, 400);
+
       }, 3000);
     }
   </script>
